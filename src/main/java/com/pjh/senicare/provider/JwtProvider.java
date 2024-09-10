@@ -55,13 +55,13 @@ public class JwtProvider {
 
     }
 
-    // 검증 메서드
+    // JWT 검증 메서드
     public String validate(String jwt) {
 
         String userId = null;
 
         try {
-
+            
             // JWT 암호화에 사용할 Key 생성
             Key key = Keys.hmacShaKeyFor(secetKey.getBytes(StandardCharsets.UTF_8));
 
