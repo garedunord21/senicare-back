@@ -8,4 +8,6 @@ import com.pjh.senicare.entity.TelAuthNumberEntity;
 @Repository
 public interface TelAuthNumberRepository extends JpaRepository<TelAuthNumberEntity, String> {
     
+    boolean existsByTelNumberAndAuthNumber(String telNumber, String authNumber);
+
 }
