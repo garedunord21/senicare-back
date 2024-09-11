@@ -9,6 +9,7 @@ import com.pjh.senicare.dto.request.auth.IdCheckRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
 import com.pjh.senicare.entity.TelAuthNumberEntity;
+import com.pjh.senicare.provider.SmsProvider;
 import com.pjh.senicare.repository.NurseRepository;
 import com.pjh.senicare.repository.TelAuthNumberRepository;
 import com.pjh.senicare.service.AuthService;
@@ -18,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImplement implements AuthService {
+
+    private final SmsProvider smsProvider;
 
     private final NurseRepository nurseRepository;
     private final TelAuthNumberRepository telAuthNumberRepository;
@@ -58,7 +61,7 @@ public class AuthServiceImplement implements AuthService {
 
         String authNumber = AuthNumberCreator.number4();
 
-
+        smsProvider.sendMessage(telNumber, authNumber);
 
         try {
 
