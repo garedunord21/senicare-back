@@ -10,5 +10,6 @@ public interface AuthService {
 
     ResponseEntity<ResponseDto> idCheck(IdCheckRequestDto dto);
     ResponseEntity<ResponseDto> telAuth(TelAuthRequestDto dto);
+    ResponseEntity<ResponseDto> telAuthCheck(TelAuthRequestDto dto);
     
 }
