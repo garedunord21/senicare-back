@@ -1,6 +1,8 @@
 package com.pjh.senicare.service.implement;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pjh.senicare.common.util.AuthNumberCreator;
@@ -9,6 +11,7 @@ import com.pjh.senicare.dto.request.auth.SignUpRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthCheckRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
+import com.pjh.senicare.entity.NurseEntity;
 import com.pjh.senicare.entity.TelAuthNumberEntity;
 import com.pjh.senicare.provider.SmsProvider;
 import com.pjh.senicare.repository.NurseRepository;
@@ -25,6 +28,8 @@ public class AuthServiceImplement implements AuthService {
 
     private final NurseRepository nurseRepository;
     private final TelAuthNumberRepository telAuthNumberRepository;
+
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public ResponseEntity<ResponseDto> idCheck(IdCheckRequestDto dto) {
@@ -101,6 +106,33 @@ public class AuthServiceImplement implements AuthService {
 
     @Override
     public ResponseEntity<ResponseDto> signUp(SignUpRequestDto dto) {
+
+        String userId = dto.getUserId();
+        String telNumber = dto.getTelNumber();
+        String authNumber = dto.getAuthNumber();
+        String password = dto.getPassword();
+
+        try {
+
+            boolean isExistedId = nurseRepository.existsByUserId(userId);
+            if (isExistedId) return ResponseDto.duplicatedUserId();
+
+            boolean isExistedTelNumber = nurseRepository.existsByTelNumber(telNumber);
+            if (isExistedTelNumber) return ResponseDto.duplicatedTelNumber();
+
+            boolean isMatched = telAuthNumberRepository.existsByTelNumberAndAuthNumber(telNumber, authNumber);
+            if (!isMatched) return ResponseDto.telAuthFail();
+
+            String encodedPassword = passwordEncoder.encode(password);
+            dto.setPassword(encodedPassword);
+            
+            NurseEntity nurseEntity = new NurseEntity(dto);
+            nurseRepository.save(nurseEntity);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
         
         return ResponseDto.success();
 
