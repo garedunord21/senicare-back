@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.pjh.senicare.common.util.AuthNumberCreator;
 import com.pjh.senicare.dto.request.auth.IdCheckRequestDto;
+import com.pjh.senicare.dto.request.auth.SignUpRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthCheckRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
@@ -94,6 +95,13 @@ public class AuthServiceImplement implements AuthService {
             return ResponseDto.databaseError();
         }
 
+        return ResponseDto.success();
+
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> signUp(SignUpRequestDto dto) {
+        
         return ResponseDto.success();
 
     }
