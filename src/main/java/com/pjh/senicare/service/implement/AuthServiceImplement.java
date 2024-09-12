@@ -15,6 +15,7 @@ import com.pjh.senicare.dto.response.ResponseDto;
 import com.pjh.senicare.dto.response.auth.SignInResponseDto;
 import com.pjh.senicare.entity.NurseEntity;
 import com.pjh.senicare.entity.TelAuthNumberEntity;
+import com.pjh.senicare.provider.JwtProvider;
 import com.pjh.senicare.provider.SmsProvider;
 import com.pjh.senicare.repository.NurseRepository;
 import com.pjh.senicare.repository.TelAuthNumberRepository;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImplement implements AuthService {
 
     private final SmsProvider smsProvider;
+    private final JwtProvider jwtProvider;
 
     private final NurseRepository nurseRepository;
     private final TelAuthNumberRepository telAuthNumberRepository;
@@ -141,10 +143,12 @@ public class AuthServiceImplement implements AuthService {
     }
 
     @Override
-    public ResponseEntity<? super SignInResponseDto> SignIn(SignInRequestDto dto) {
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
 
         String userId = dto.getUserId();
         String password = dto.getPassword();
+
+        String accessToken = null;
 
         try {
 
@@ -155,10 +159,15 @@ public class AuthServiceImplement implements AuthService {
             boolean isMatched = passwordEncoder.matches(password, encodedPassword);
             if (!isMatched) return ResponseDto.signInFail();
 
+            accessToken = jwtProvider.create(userId);
+            if (accessToken == null) return ResponseDto.tokenCreateFail();
+
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
+
+        return SignInResponseDto.success(accessToken);
         
     }
 
