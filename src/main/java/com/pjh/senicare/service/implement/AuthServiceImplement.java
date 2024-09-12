@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.pjh.senicare.common.util.AuthNumberCreator;
 import com.pjh.senicare.dto.request.auth.IdCheckRequestDto;
+import com.pjh.senicare.dto.request.auth.SignInRequestDto;
 import com.pjh.senicare.dto.request.auth.SignUpRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthCheckRequestDto;
 import com.pjh.senicare.dto.request.auth.TelAuthRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
+import com.pjh.senicare.dto.response.auth.SignInResponseDto;
 import com.pjh.senicare.entity.NurseEntity;
 import com.pjh.senicare.entity.TelAuthNumberEntity;
 import com.pjh.senicare.provider.SmsProvider;
@@ -136,6 +138,28 @@ public class AuthServiceImplement implements AuthService {
         
         return ResponseDto.success();
 
+    }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> SignIn(SignInRequestDto dto) {
+
+        String userId = dto.getUserId();
+        String password = dto.getPassword();
+
+        try {
+
+            NurseEntity nurseEntity = nurseRepository.findByUserId(userId);
+            if (nurseEntity == null) return ResponseDto.signInFail();
+
+            String encodedPassword = nurseEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if (!isMatched) return ResponseDto.signInFail();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        
     }
 
 }
