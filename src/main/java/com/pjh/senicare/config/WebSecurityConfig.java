@@ -50,7 +50,6 @@ public class WebSecurityConfig {
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return security.build();
-
     }
 
     @Bean
