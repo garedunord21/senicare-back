@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.pjh.senicare.entity.NurseEntity;
-import java.util.List;
 
 
 @Repository
@@ -14,5 +13,6 @@ public interface NurseRepository extends JpaRepository<NurseEntity, String> {
     boolean existsByTelNumber(String telNumber);
 
     NurseEntity findByUserId(String UserId);
+    NurseEntity findBySnsIdAndJoinPath(String sns, String joinPath);
 
 }
