@@ -23,7 +23,7 @@ public class NurseController {
         @AuthenticationPrincipal String userId
     ) {
         ResponseEntity<? super GetSignInResponseDto> response = nurseService.getSignIn(userId);
-        return userId;
+        return response;
     }
 
 }

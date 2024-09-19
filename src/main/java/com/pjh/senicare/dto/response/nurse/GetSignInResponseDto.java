@@ -25,7 +25,7 @@ public class GetSignInResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<GetSignInResponseDto> success(NurseEntity nurseEntity) {
-        GetSignInResponseDto responseBody = new GetSignInResponseDto(null);
+        GetSignInResponseDto responseBody = new GetSignInResponseDto(nurseEntity);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
