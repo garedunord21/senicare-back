@@ -10,6 +10,7 @@ import com.pjh.senicare.entity.ToolEntity;
 @Repository
 public interface ToolRepository extends JpaRepository<ToolEntity, Integer> {
     
+    ToolEntity findByToolNumber(Integer toolNumber);
     List<ToolEntity> findByOrderByToolNumberDesc();
 
 }
