@@ -1,10 +1,14 @@
 package com.pjh.senicare.service.implement;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pjh.senicare.dto.request.tool.PostToolRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
+import com.pjh.senicare.dto.response.tool.GetToolListResponseDto;
 import com.pjh.senicare.entity.ToolEntity;
 import com.pjh.senicare.repository.ToolRepository;
 import com.pjh.senicare.service.ToolService;
@@ -31,6 +35,24 @@ public class ToolServiceImplement implements ToolService {
         }
 
         return ResponseDto.success();
+
+    }
+
+    @Override
+    public ResponseEntity<? super GetToolListResponseDto> getToolList() {
+        
+        List<ToolEntity> toolEntities = new ArrayList<>();
+
+        try {
+
+            toolEntities = toolRepository.findByOrderByToolNumberDesc();
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetToolListResponseDto.success();
 
     }
     

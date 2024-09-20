@@ -678,6 +678,12 @@ Tool 모듈은 모두 인증이 필요합니다.
 
 ##### Request
 
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
 ###### Request Body
 
 | name | type | description | required |
@@ -690,6 +696,7 @@ Tool 모듈은 모두 인증이 필요합니다.
 
 ```bash
 curl -v -X POST "http://localhost:4000/api/v1/tool" \
+ -h "Authorization=Bearer XXXX" \
  -d "name=휠체어" \
  -d "purpose=거동이 불편하신 분들을 위한 휠체어" \
  -d "count=1"
@@ -778,7 +785,8 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -X GET "http://localhost:4000/api/v1/tool" 
+curl -X GET "http://localhost:4000/api/v1/tool" \
+ -h "Authorization=Bearer XXXX"
 ```
 
 ##### Response
@@ -795,7 +803,7 @@ curl -X GET "http://localhost:4000/api/v1/tool"
 |---|:---:|:---:|:---:|
 | code | String | 결과 코드 | O |
 | message | String | 결과 코드에 대한 설명 | O |
-| tools | Tool | 용품 리스트 | O |
+| tools | Tool[] | 용품 리스트 | O |
   
 **Tool**  
 | name | type | description | required |
@@ -871,7 +879,8 @@ Content-Type: application/json;charset=UTF-8
 ###### Example
 
 ```bash
-curl -X GET "http://localhost:4000/api/v1/tool/1" 
+curl -X GET "http://localhost:4000/api/v1/tool/1" \
+ -h "Authorization=Bearer XXXX"
 ```
 
 ##### Response
@@ -967,6 +976,12 @@ Content-Type: application/json;charset=UTF-8
 
 ##### Request
 
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
 ###### Request Body
 
 | name | type | description | required |
@@ -979,6 +994,7 @@ Content-Type: application/json;charset=UTF-8
 
 ```bash
 curl -v -X PATCH "http://localhost:4000/api/v1/tool" \
+ -h "Authorization=Bearer XXXX" \
  -d "name=휠체어 대형" \
  -d "purpose=거동이 불편하신 분들을 위한 휠체어" \
  -d "count=5"
@@ -1069,10 +1085,17 @@ Content-Type: application/json;charset=UTF-8
 
 ##### Request
 
+###### Header
+
+| name | description | required |
+|---|:---:|:---:|
+| Authorization | Bearer 토큰 인증 헤더 | O |
+
 ###### Example
 
 ```bash
 curl -v -X DELETE "http://localhost:4000/api/v1/tool/1" \
+ -h "Authorization=Bearer XXXX"
 ```
 
 ##### Response
