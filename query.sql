@@ -1,5 +1,5 @@
 SELECT 
-        C.customer_number as customerNumber, 
+        C.custom_number as customerNumber, 
         C.name as name, 
         C.birth as birth, 
         C.location as location, 
