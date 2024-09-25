@@ -12,6 +12,7 @@ import com.pjh.senicare.dto.response.ResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerResponseDto;
 import com.pjh.senicare.entity.CustomerEntity;
+import com.pjh.senicare.repository.CareRecordRepository;
 import com.pjh.senicare.repository.CustomerRepository;
 import com.pjh.senicare.repository.NurseRepository;
 import com.pjh.senicare.repository.resultSet.GetCustomerResultSet;
@@ -26,6 +27,7 @@ public class CustomerServiceImplement implements CustomerService {
 
     private final NurseRepository nurseRepository;
     private final CustomerRepository customerRepository;
+    private final CareRecordRepository careRecordRepository;
 
     @Override
     public ResponseEntity<ResponseDto> postCustomer(PostCustomerRequestDto dto) {
@@ -109,6 +111,30 @@ public class CustomerServiceImplement implements CustomerService {
             return ResponseDto.databaseError();
         }
     
+        return ResponseDto.success();
+
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> deleteCustomer(Integer customerNumber, String userId) {
+
+        try {
+
+        CustomerEntity customerEntity = customerRepository.findByCustomerNumber(customerNumber);
+        if (customerEntity == null) return ResponseDto.noExistCustomer();
+
+        String charger = customerEntity.getCharger();
+        boolean isCharger = charger.equals(userId);
+        if (!isCharger) return ResponseDto.noPermission();
+
+        careRecordRepository.deleteByCustomerNumber(customerNumber);
+        customerRepository.delete(customerEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
         return ResponseDto.success();
 
     }
