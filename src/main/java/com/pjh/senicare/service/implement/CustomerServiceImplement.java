@@ -7,14 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pjh.senicare.dto.request.customer.PatchCustomerRequestDto;
+import com.pjh.senicare.dto.request.customer.PostCareRecordRequestDto;
 import com.pjh.senicare.dto.request.customer.PostCustomerRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerResponseDto;
+import com.pjh.senicare.entity.CareRecordEntity;
 import com.pjh.senicare.entity.CustomerEntity;
+import com.pjh.senicare.entity.ToolEntity;
 import com.pjh.senicare.repository.CareRecordRepository;
 import com.pjh.senicare.repository.CustomerRepository;
 import com.pjh.senicare.repository.NurseRepository;
+import com.pjh.senicare.repository.ToolRepository;
 import com.pjh.senicare.repository.resultSet.GetCustomerResultSet;
 import com.pjh.senicare.repository.resultSet.GetCustomersResultSet;
 import com.pjh.senicare.service.CustomerService;
@@ -25,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomerServiceImplement implements CustomerService {
 
+    private final ToolRepository toolRepository;
     private final NurseRepository nurseRepository;
     private final CustomerRepository customerRepository;
     private final CareRecordRepository careRecordRepository;
@@ -138,4 +143,44 @@ public class CustomerServiceImplement implements CustomerService {
         return ResponseDto.success();
 
     }
+
+    @Override
+    public ResponseEntity<ResponseDto> postCareRecord(
+        PostCareRecordRequestDto dto, 
+        Integer customerNumber,
+        String userId
+    ) {
+
+        try {
+
+            String usedToolName = null;
+
+            Integer usedToolNumber = dto.getUsedToolNumber();
+            if (usedToolNumber != null) {
+                ToolEntity toolEntity = toolRepository.findByToolNumber(usedToolNumber);
+                if (toolEntity == null) return ResponseDto.noExistTool();
+
+                Integer count = toolEntity.getCount();
+                Integer usedCount = dto.getCount();
+                if (usedCount > count) return ResponseDto.ToolInsufficient();
+
+                usedToolName = toolEntity.getName();
+            }
+
+            CareRecordEntity careRecordEntity = new CareRecordEntity(dto, usedToolName, userId, customerNumber);
+            careRecordRepository.save(careRecordEntity);
+
+            if (usedToolNumber != null) {
+                
+            }
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
+        
+    }
+
 }
