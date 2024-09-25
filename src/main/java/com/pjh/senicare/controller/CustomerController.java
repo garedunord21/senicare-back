@@ -45,7 +45,7 @@ public class CustomerController {
     public ResponseEntity<? super GetCustomerResponseDto> getCustomer (
         @PathVariable("customerNumber") Integer customerNumber
     ) {
-        ResponseEntity<? super GetCustomerResponseDto> response = customerService.getCustomer();
+        ResponseEntity<? super GetCustomerResponseDto> response = customerService.getCustomer(customerNumber);
         return response;
     }
 
@@ -59,5 +59,4 @@ public class CustomerController {
         return response;
     }
     
-
 }
