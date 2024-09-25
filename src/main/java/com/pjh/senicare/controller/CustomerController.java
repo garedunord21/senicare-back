@@ -15,6 +15,7 @@ import com.pjh.senicare.dto.request.customer.PatchCustomerRequestDto;
 import com.pjh.senicare.dto.request.customer.PostCareRecordRequestDto;
 import com.pjh.senicare.dto.request.customer.PostCustomerRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
+import com.pjh.senicare.dto.response.customer.GetCareRecordListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerResponseDto;
 import com.pjh.senicare.service.CustomerService;
@@ -84,6 +85,14 @@ public class CustomerController {
         ) return ResponseDto.validationFail();
 
         ResponseEntity<ResponseDto> response = customerService.postCareRecord(requestBody, customerNumber, userId);
+        return response;
+    }
+
+    @GetMapping("/{customerNumber}/care-records")
+    public ResponseEntity<? super GetCareRecordListResponseDto> getCareRecordList(
+        @PathVariable("customerNumber") Integer customerNumber
+    ) {
+        ResponseEntity<? super GetCareRecordListResponseDto> response = customerService.getCareRecordList(customerNumber);
         return response;
     }
     

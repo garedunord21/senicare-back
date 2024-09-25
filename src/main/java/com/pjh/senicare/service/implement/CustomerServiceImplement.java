@@ -10,6 +10,7 @@ import com.pjh.senicare.dto.request.customer.PatchCustomerRequestDto;
 import com.pjh.senicare.dto.request.customer.PostCareRecordRequestDto;
 import com.pjh.senicare.dto.request.customer.PostCustomerRequestDto;
 import com.pjh.senicare.dto.response.ResponseDto;
+import com.pjh.senicare.dto.response.customer.GetCareRecordListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerListResponseDto;
 import com.pjh.senicare.dto.response.customer.GetCustomerResponseDto;
 import com.pjh.senicare.entity.CareRecordEntity;
@@ -185,5 +186,22 @@ public class CustomerServiceImplement implements CustomerService {
         return ResponseDto.success();
         
     }
+
+    @Override
+    public ResponseEntity<? super GetCareRecordListResponseDto> getCareRecordList(Integer customerNumber) {
+        
+        List<CareRecordEntity> careRecordEntities = new ArrayList<>();
+
+        try {
+            careRecordEntities = careRecordRepository.findByCustomerNumberOrderByRecordNumberDesc(customerNumber);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetCareRecordListResponseDto.success(careRecordEntities);
+    }
+
+    
 
 }
