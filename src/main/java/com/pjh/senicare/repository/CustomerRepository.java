@@ -7,14 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.pjh.senicare.entity.CustomerEntity;
-import com.pjh.senicare.repository.resultSet.GetCustomerResultSet;
+import com.pjh.senicare.repository.resultSet.GetCustomersResultSet;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Integer> {
     
     @Query(value = 
         "SELECT " +
-        "    C.customer_number as customerNumber, " +
+        "    C.custom_number as customerNumber, " +
         "    C.name as name, " +
         "    C.birth as birth, " +
         "    C.location as location, " + 
@@ -25,7 +25,7 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
         "ORDER BY C.custom_number DESC ",
     nativeQuery=true
     )
-    List<GetCustomerResultSet> getCustomers();
+    List<GetCustomersResultSet> getCustomers();
 
     
 
