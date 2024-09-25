@@ -1947,8 +1947,8 @@ Content-Type: application/json;charset=UTF-8
 
 | name | type | description | required |
 |---|:---:|:---:|:---:|
-| contents | String | 내용 | X |
-| usedToolName | String | 사용 용품 이름 | X |
+| contents | String | 내용 | O |
+| usedToolNumber | Integer | 사용 용품 번호 | X |
 | count | String | 개수 | X |
 
 ###### Example
@@ -2092,8 +2092,8 @@ curl -X GET "http://localhost:4000/api/v1/customer/1/care-records" \
 | recordNumber | Integer | 관리 기록 번호 | O |
 | recordDate | String | 기록 날짜 | O |
 | contents | String | 내용 | O |
-| usedToolName | String | 사용된 용품 이름 | O |
-| count | String | 용품 사용 개수 | O |
+| usedToolName | String | 사용된 용품 이름 | X |
+| count | String | 용품 사용 개수 | X |
 
 ###### Example
 
