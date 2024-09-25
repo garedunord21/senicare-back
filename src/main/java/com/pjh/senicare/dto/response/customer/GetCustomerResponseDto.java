@@ -35,5 +35,4 @@ public class GetCustomerResponseDto extends ResponseDto {
         GetCustomerResponseDto responseBody = new GetCustomerResponseDto(resultSet);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
-    
 }
