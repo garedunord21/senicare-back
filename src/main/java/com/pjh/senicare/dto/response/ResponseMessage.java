@@ -16,6 +16,8 @@ public interface ResponseMessage {
     String TEL_AUTH_FAIL = "Tel number authentication failed";
     String SIGN_IN_FAIL = "Sign in failed.";
     String AUTHENTICATION_FAIL = "Authentication fail.";
+    
+    String NO_PERMISSION = "No permission.";
 
     String MESSAGE_SEND_FAIL = "Auth number send failed.";
     String TOKEN_CREATE_FAIL = "Token creation failed.";
