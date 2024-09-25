@@ -3,10 +3,12 @@ package com.pjh.senicare.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pjh.senicare.dto.response.nurse.GetNurseListResponseDto;
+import com.pjh.senicare.dto.response.nurse.GetNurseResponseDto;
 import com.pjh.senicare.dto.response.nurse.GetSignInResponseDto;
 import com.pjh.senicare.service.NurseService;
 
@@ -16,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/nurse")
 @RequiredArgsConstructor
 public class NurseController {
-    
+
     private final NurseService nurseService;
 
     @GetMapping(value={"", "/"})
@@ -33,4 +35,12 @@ public class NurseController {
         return response;
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<? super GetNurseResponseDto> getNurse(
+        @PathVariable("userId") String userId
+    ) {
+        ResponseEntity<? super GetNurseResponseDto> response = nurseService.getNurse(userId);
+        return response;
+    }
+    
 }
