@@ -27,7 +27,7 @@ public class GetCustomerResponseDto extends ResponseDto {
         this.profileImage = resultSet.getProfileImage();
         this.name = resultSet.getName();
         this.birth = resultSet.getBirth();
-        this.chargerName = resultSet.getChargeName();
+        this.chargerName = resultSet.getChargerName();
         this.chargerId = resultSet.getChargerId();
         this.address = resultSet.getAddress();
         this.location = resultSet.getLocation();
