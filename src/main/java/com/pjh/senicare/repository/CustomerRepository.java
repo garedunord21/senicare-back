@@ -34,14 +34,15 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
 
     @Query(
     value=
-        "SELECT " +
-        "C.customer_number as customerNumber, " +
-        "C.profile_image as profileImage, " +
-        "C.name as name,  " +
-        "C.birth as birth, " + 
-        "N.name as chargerName, " +
-        "N.user_id as chargerId, " +
-        "C.address as address  " +
+    "SELECT " +
+    "C.customer_number as customerNumber, " +
+    "C.profile_image as profileImage, " +
+    "C.name as name,  " +
+    "C.birth as birth, " + 
+    "N.name as chargerName, " +
+    "N.user_id as chargerId, " +
+    "C.address as address, " +
+    "C.location as location " +
     "FROM customers C LEFT JOIN nurses N  " +
     "ON C.charger = N.user_id  " +
     "WHERE C.customer_number = :customerNumber  ",
