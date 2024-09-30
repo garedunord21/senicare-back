@@ -15,6 +15,7 @@ import com.pjh.senicare.repository.resultSet.GetCustomersResultSet;
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Integer> {
     
     CustomerEntity findByCustomerNumber(Integer customerNumber);
+    List<CustomerEntity> findByCharger(String charger);
 
     @Query(
     value = 
