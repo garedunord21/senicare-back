@@ -949,7 +949,7 @@ Content-Type: application/json;charset=UTF-8
 
 ***
 
-#### - 용품 리스트 보기
+#### - 담당 고객 리스트 보기
   
 ##### 설명
 
