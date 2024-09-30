@@ -31,7 +31,7 @@ public class NurseServiceImplement implements NurseService {
     public ResponseEntity<? super GetSignInResponseDto> getSignIn(String userId) {
         
         NurseEntity nurseEntity = null;
-        
+
         try {
 
             nurseEntity = nurseRepository.findByUserId(userId);
@@ -43,14 +43,14 @@ public class NurseServiceImplement implements NurseService {
         }
 
         return GetSignInResponseDto.success(nurseEntity);
-        
+
     }
 
     @Override
     public ResponseEntity<? super GetNurseListResponseDto> getNurseList() {
-
-        List<NurseEntity> nurseEntities = new ArrayList<>();
         
+        List<NurseEntity> nurseEntities = new ArrayList<>();
+
         try {
 
             nurseEntities = nurseRepository.findAll();
@@ -66,9 +66,9 @@ public class NurseServiceImplement implements NurseService {
 
     @Override
     public ResponseEntity<? super GetNurseResponseDto> getNurse(String userId) {
-
-        NurseEntity nurseEntity = null;
         
+        NurseEntity nurseEntity = null;
+
         try {
 
             nurseEntity = nurseRepository.findByUserId(userId);
@@ -80,11 +80,12 @@ public class NurseServiceImplement implements NurseService {
         }
 
         return GetNurseResponseDto.success(nurseEntity);
+
     }
 
     @Override
     public ResponseEntity<ResponseDto> patchNurse(PatchNurseRequestDto dto, String userId) {
-
+        
         try {
 
             String name = dto.getName();
@@ -94,13 +95,14 @@ public class NurseServiceImplement implements NurseService {
             nurseEntity.setName(name);
 
             nurseRepository.save(nurseEntity);
-
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
 
         return ResponseDto.success();
+
     }
 
     @Override
@@ -109,7 +111,7 @@ public class NurseServiceImplement implements NurseService {
         List<CustomerEntity> customerEntities = new ArrayList<>();
 
         try {
-
+            
             customerEntities = customerRepository.findByCharger(nurseId);
 
         } catch (Exception exception) {

@@ -18,12 +18,12 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
     List<CustomerEntity> findByCharger(String charger);
 
     @Query(
-    value = 
+    value=
         "SELECT " +
         "    C.customer_number as customerNumber, " +
         "    C.name as name, " +
         "    C.birth as birth, " +
-        "    C.location as location, " + 
+        "    C.location as location, " +
         "    N.name as chargerName, " +
         "    N.user_id as chargerId " +
         "FROM customers C LEFT JOIN nurses N " +
@@ -35,19 +35,19 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, Intege
 
     @Query(
     value=
-    "SELECT " +
-    "C.customer_number as customerNumber, " +
-    "C.profile_image as profileImage, " +
-    "C.name as name,  " +
-    "C.birth as birth, " + 
-    "N.name as chargerName, " +
-    "N.user_id as chargerId, " +
-    "C.address as address, " +
-    "C.location as location " +
-    "FROM customers C LEFT JOIN nurses N  " +
-    "ON C.charger = N.user_id  " +
-    "WHERE C.customer_number = :customerNumber  ",
-    nativeQuery = true
+        "SELECT " +
+        "    C.customer_number as customerNumber, " +
+        "    C.profile_image as profileImage, " +
+        "    C.name as name, " +
+        "    C.birth as birth, " +
+        "    N.name as chargerName, " +
+        "    N.user_id as chargerId, " +
+        "    C.address as address, " +
+        "    C.location as location " +
+        "FROM customers C LEFT JOIN nurses N " +
+        "ON C.charger = N.user_id " +
+        "WHERE C.customer_number = :customerNumber ",
+    nativeQuery=true
     )
     GetCustomerResultSet getCustomer(@Param("customerNumber") Integer customerNumber);
 
