@@ -9,7 +9,6 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pjh.senicare.common.object.CustomOAuth2User;
 import com.pjh.senicare.entity.NurseEntity;
 import com.pjh.senicare.provider.JwtProvider;
